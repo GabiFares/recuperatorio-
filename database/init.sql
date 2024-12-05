@@ -69,7 +69,17 @@ CREATE TABLE IF NOT EXISTS producto (
     foto BOOLEAN NULL, 
     CONSTRAINT fk_categoria FOREIGN KEY (id_categoria) 
         REFERENCES categoria (id_categoria) ON DELETE RESTRICT,
-    CONSTRAINT precio_positivo CHECK (precio_unidad > 0)
+    CONSTRAINT precio_positivo CHECK (precio_unidad >= 0)
+); 
+
+CREATE TABLE IF NOT EXISTS regalo (
+    id_regalo SERIAL PRIMARY KEY,
+    id_usuario INTEGER NOT NULL,
+    nombre VARCHAR(50) NOT NULL,
+    descripcion VARCHAR(300) NOT NULL,
+    precio_unidad NUMERIC(10,2) NOT NULL,
+    CONSTRAINT fk_usuario FOREIGN KEY (id_usuario) 
+        REFERENCES usuario (id) ON DELETE RESTRICT
 ); 
 
 -- Crear la tabla pedido con claves foráneas a local y usuario

@@ -45,6 +45,7 @@ export class VerPedidoUsuarioPage implements OnInit {
   ngOnInit(): void {
     if (this.activatedRoute.snapshot.queryParams['id_usuario']) {
       this.userId = this.activatedRoute.snapshot.queryParams['id_usuario'];
+      this.isAdmin = this.authService.isAdmin();
       this.cargarPedidos();
       this.setupWebSocket();
     }
@@ -86,6 +87,7 @@ export class VerPedidoUsuarioPage implements OnInit {
       ),
     );
     this.pedidosFiltrados.set(this.pedidos());
+    console.log('pedidos', pedidossinfiltrar);
   }
 
   async cargarPedidosRepartidor() {
