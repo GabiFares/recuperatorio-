@@ -1,0 +1,58 @@
+<!-- Componente de la barra de navegación -->
+<app-navbar (searchValueChange)="actualizarFiltroDePedidos($event)"></app-navbar>
+
+<div class="flex justify-center">
+  <div
+    class="grid grid-cols-1 gap-4 pb-40 w-full max-w-4xl overflow-y-auto max-h-screen [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-neutral-700 dark:[&::-webkit-scrollbar-thumb]:bg-neutral-500">
+    <div class="bg-white p-6 rounded-lg shadow-lg flex items-center justify-between mb-8"
+      *ngFor="let pedido of pedidosFiltrados(); let i = index">
+      <div class="flex-1">
+        <h2 class="text-lg font-semibold text-gray-900">{{pedido.nombre}}</h2>
+        <p class="text-gray-600" *ngIf="this.isAdmin==false">
+          {{pedido.estado}}
+        </p>
+        <div class="flex items-center gap-2">
+          <div class="relative flex items-center max-w-[6rem]">
+            <select class="text-gray-600" (change)="onChange(pedido, $event)" *ngIf="this.isAdmin==true">
+              <option value="CONFIRMADO">Confirmado</option>
+              <option value="EN_PREPARACION" [selected]="pedido.estado === 'EN_PREPARACION'">
+                En Preparacion
+              </option>
+              <option value="LISTO" [selected]="pedido.estado === 'LISTO'">
+                Listo
+              </option>
+              <option value="EN_CAMINO" [selected]="pedido.estado === 'EN_CAMINO'">
+                En camino
+              </option>
+              <option value="ENTREGADO">Entregado</option>
+              <option value="CANCELADO">Cancelado</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex items-end justify-between w-full">
+          <span class="text-xl font-bold text-gray-900">
+            ${{ pedido.importe_total }}
+          </span>
+
+          <div class="flex gap-4">
+            <button (click)="verDetalles(pedido.id_pedido,pedido.id_direccion)" *ngIf="this.repartidor==false"
+              class="bg-green-500 text-white px-3 py-2 rounded-md hover:bg-blue-800 transition-all flex items-center justify-center">
+              Ver detalle del pedido
+            </button>
+            <button
+              class="bg-red-600 text-white px-3 py-2 rounded-md hover:bg-red-700 transition-all flex items-center justify-center"
+              *ngIf="this.isAdmin==false && pedido.estado !='EN_PREPARACION' && this.repartidor==false"
+              (click)="Cancelar(pedido)">
+              Cancelar
+            </button>
+            <button (click)="tomarPedido(pedido)" *ngIf="this.repartidor==true"
+              class="bg-green-500 text-white px-3 py-2 rounded-md hover:bg-blue-800 transition-all flex items-center justify-center">
+              Tomar Pedido
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

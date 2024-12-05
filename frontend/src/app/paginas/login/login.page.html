@@ -1,0 +1,83 @@
+<section class="bg-gray-50 min-h-screen flex items-center justify-center">
+  <!-- Contenedor del login -->
+  <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5">
+    <!-- Aquí va el formulario de inicio de sesión -->
+    <div class="md:w-1/2 px-8">
+      <h2 class="font-bold text-2xl text-slate-800 text-center">Login</h2>
+      <form id="formlogin" (ngSubmit)="this.onSubmit()" class="flex flex-col gap-4" #formlogin="ngForm">
+        <!-- Campo para el email -->
+        <input type="text" name="email" id="email" class="p-2 mt-8 rounded-xl border text-slate-800"
+          placeholder="emifrangab@hotmail.uy" email required [(ngModel)]="this.email" #emailCntrl="ngModel" [ngClass]="{
+            'border-red-500 bg-red-50': emailCntrl.invalid && emailCntrl.touched || this.loginOkay==false,
+            'border-gray-300': !emailCntrl.touched,
+            'border-green-500 bg-green-50': emailCntrl.valid && emailCntrl.touched && this.loginOkay==true,
+          }" />
+        <label *ngIf="emailCntrl.errors?.['required'] && emailCntrl.touched" for="email"
+          class="text-red-500 text-sm">Tiene que colocar el email.</label>
+        <label *ngIf="emailCntrl.errors?.['email']" for="email" class="text-red-500 text-sm">Tiene que colocar un email
+          válido.</label>
+        <label *ngIf="this.loginOkay==false && passControl.touched" class="text-red-500 text-sm">Su usuario o contraseña
+          son incorrectos</label>
+
+        <!-- Campo para la contraseña -->
+        <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña"
+          class="p-2 mt-2 rounded-xl border text-slate-800" minlength="5" maxlength="20" required
+          [(ngModel)]="this.password" #passControl="ngModel" [ngClass]="{
+            'border-red-500 bg-red-50' : passControl.invalid && passControl.touched || this.loginOkay==false,
+            'border-gray-300' : !passControl.touched,
+            'border-green-500 bg-green-50' : passControl.valid && passControl.touched && this.loginOkay==true
+          }" />
+        <label *ngIf="passControl.errors?.['required'] && passControl.touched" class="text-red-500 text-sm">Necesita
+          ingresar su contraseña</label>
+        <label *ngIf="passControl.errors?.['minlength'] && passControl.touched" class="text-red-500 text-sm">Su
+          contraseña debe ser más larga</label>
+        <label *ngIf="passControl.errors?.['maxlength'] && passControl.touched" class="text-red-500 text-sm">Su
+          contraseña debe ser más corta</label>
+
+        <!-- Botón para iniciar sesión -->
+        <button type="submit" [disabled]="formlogin.invalid" id="boton"
+          class="bg-slate-800 rounded-xl text-white py-2 hover:scale-110 duration-300">
+          Iniciar Sesión
+        </button>
+      </form>
+
+      <!-- Divisor -->
+      <div class="mt-8 grid grid-cols-3 items-center text-gray-500">
+        <hr class="border-gray-500" />
+        <p class="text-center text-xl">O</p>
+        <hr class="border-gray-500" />
+      </div>
+
+      <!-- Botón para iniciar sesión con Google -->
+      <button type="submit" id="boton"
+        class="text-slate-800 rounded-xl py-2 bg-white w-full mt-5 flex justify-center items-center text-sm hover:scale-110 duration-300"
+        (click)="redirectToGoogle()">
+        <img src="assets/google.png" width="20px" height="25px" class="mr-3" />
+        Iniciar Sesión con Google
+      </button>
+
+      <!-- Botón para iniciar sesión con Facebook -->
+      <button type="submit" id="boton"
+        class="text-white rounded-xl py-2 bg-blue-600 w-full mt-5 flex justify-center items-center text-sm hover:scale-110 duration-300"
+        (click)="redirectToFacebook()">
+        <img src="assets/facebook.png" width="20px" height="25px" class="mr-3" />
+        Iniciar Sesión con Facebook
+      </button>
+
+      <!-- Divisor -->
+      <hr class="border-gray-300 mt-4" />
+      <div class="text-sm flex justify-between items-center mt-3">
+        <p class="text-gray-500">¿No tiene una cuenta?</p>
+        <button class="py-2 px-5 text-slate-800 bg-white rounded-xl hover:scale-110 duration-300"
+          (click)="redirectToRegister()">
+          Registrarse
+        </button>
+      </div>
+    </div>
+
+    <!-- Logo :) -->
+    <div class="w-1/2 md:block hidden">
+      <img class="rounded-2xl w-full h-full" src="assets/logo.jpeg" alt="Logo" />
+    </div>
+  </div>
+</section>

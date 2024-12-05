@@ -1,0 +1,17 @@
+/* 
+ * Importa las reglas básicas de Tailwind CSS, que incluyen el restablecimiento de estilos y las definiciones básicas de estilos.
+ * Estas reglas aseguran que todos los navegadores comiencen con un conjunto consistente de estilos base.
+ */
+@tailwind base;
+
+/*
+  * Importa los componentes de Tailwind CSS, que incluyen las clases de componentes prefabricados.
+  * Estas clases proporcionan estilos para elementos comunes como botones, formularios, etc.
+  */
+@tailwind components;
+
+/*
+  * Importa las utilidades de Tailwind CSS, que incluyen clases de utilidad para el diseño de CSS.
+  * Estas clases permiten aplicar estilos directamente en el HTML, facilitando un desarrollo rápido y consistente.
+  */
+@tailwind utilities;

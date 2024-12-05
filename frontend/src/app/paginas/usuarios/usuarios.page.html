@@ -1,0 +1,14 @@
+<!-- Componente de la barra de navegación -->
+<app-navbar [withSearch]="false"></app-navbar>
+<div
+  class="bg-white p-6 rounded-lg shadow-lg overflow-y-auto max-h-screen flex items-center justify-between mb-8"
+  *ngFor="let usuario of usuarios; let i = index"
+>
+  <span>{{usuario.nombre}}</span>
+  <button
+    (click)="verHistorialUsuario(usuario.id)"
+    class="bg-green-500 text-white px-3 py-2 rounded-md hover:bg-blue-800 transition-all flex items-center justify-center"
+  >
+    Ver historial de pedidos
+  </button>
+</div>

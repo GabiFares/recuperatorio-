@@ -1,0 +1,27 @@
+.map-container {
+  width: 100%; /* Ocupa todo el ancho disponible */
+  height: 100%; /* Ocupa todo el alto disponible */
+  display: flex; /* Para mantenerlo alineado correctamente */
+  flex-direction: row; /* Asegura el diseño en línea */
+  justify-content: center; /* Centrado horizontalmente */
+  align-items: center; /* Centrado verticalmente */
+  position: relative; /* Para asegurar que el mapa sea posicionado correctamente */
+}
+
+.map {
+  width: 100%; /* Asegúrate de que use todo el ancho del contenedor */
+  height: 400px; /* Define una altura inicial para el mapa */
+  min-height: 300px; /* Evita que el mapa se colapse en pantallas pequeñas */
+  border: 1px solid #ddd; /* Para depurar, añade un borde */
+}
+
+@media (max-width: 768px) {
+  /* Diseño responsivo para móviles */
+  .map-container {
+    height: auto;
+    flex-direction: column; /* Mantén el diseño responsivo */
+  }
+  .map {
+    height: 300px; /* Altura específica para dispositivos pequeños */
+  }
+}

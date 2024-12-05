@@ -1,0 +1,59 @@
+name: caso2 # Nombre del proyecto o del conjunto de servicios
+services:
+  backend:
+    image: backend # Nombre de la imagen del contenedor para el backend
+    container_name: backend # Nombre del contenedor para el backend
+    build:
+      context: ./backend # Directorio de contexto para la construcción del contenedor de backend
+    command: sh -c "npm install && npm run dev" # Comando para instalar dependencias y ejecutar el servidor de desarrollo
+    volumes:
+      - ./backend:/backend # Volumen para sincronizar el directorio local del backend con el contenedor
+    environment: # Variables de entorno para configurar el backend
+      - PGDATABASE=${PGDATABASE} # Nombre de la base de datos de PostgreSQL
+      - PGUSER=${PGUSER} # Usuario de PostgreSQL
+      - PGPASSWORD=${PGPASSWORD} # Contraseña de PostgreSQL
+      - PGHOST=${PGHOST} # Host de PostgreSQL
+      - FRONT_URL=${FRONT_URL}
+      - GOOGLE_ID=${GOOGLE_ID} # ID de cliente de Google OAuth
+      - GOOGLE_SECRET=${GOOGLE_SECRET} # Secreto de cliente de Google OAuth
+      - FACEBOOK_ID=${FACEBOOK_ID} # ID de cliente de Facebook OAuth
+      - FACEBOOK_SECRET=${FACEBOOK_SECRET} # Secreto de cliente de Facebook OAuth
+      - JWTSECRET=${JWTSECRET} # Secreto para firmar los tokens JWT
+      - user=${user} # Usuario genérico (puede ser usado para autenticación)
+      - pass=${pass} # Contraseña genérica (puede ser usada para autenticación)
+
+  frontend:
+    image: frontend # Nombre de la imagen del contenedor para el frontend
+    container_name: frontend # Nombre del contenedor para el frontend
+    build:
+      context: ./frontend # Directorio de contexto para la construcción del contenedor de frontend
+    volumes:
+      - ./frontend/:/frontend # Volumen para sincronizar el directorio local del frontend con el contenedor
+    command: sh -c "npm install && npm start" # Comando para instalar dependencias y ejecutar el servidor de desarrollo
+
+  database:
+    image: database # Nombre de la imagen del contenedor para la base de datos
+    container_name: database # Nombre del contenedor para la base de datos
+    build:
+      context: ./database # Directorio de contexto para la construcción del contenedor de la base de datos
+    environment: # Variables de entorno para configurar la base de datos
+      - POSTGRES_DB=${PGDATABASE} # Nombre de la base de datos de PostgreSQL
+      - POSTGRES_USER=${PGUSER} # Usuario de PostgreSQL
+      - POSTGRES_PASSWORD=${PGPASSWORD} # Contraseña de PostgreSQL
+    ports:
+      - 5432:5432 # Mapea el puerto 5432 del contenedor al puerto 5432 del host
+
+  proxy:
+    image: nginx:alpine # Utiliza la imagen de NGINX basada en Alpine
+    container_name: proxy # Nombre del contenedor para el proxy
+    volumes:
+      - ./proxy/certs:/etc/nginx/certs # Volumen para los certificados SSL/TLS
+      - ./proxy/myconf.template:/etc/nginx/templates/default.conf.template # Volumen para la plantilla de configuración de NGINX
+    environment: # Variables de entorno para configurar el proxy
+      - FRONT_URL=${FRONT_URL} # URL del frontend
+    ports:
+      - 80:80 # Mapea el puerto 80 del contenedor al puerto 80 del host (HTTP)
+      - 443:443 # Mapea el puerto 443 del contenedor al puerto 443 del host (HTTPS)
+    depends_on:
+      - frontend # El contenedor del proxy depende del contenedor del frontend
+      - backend # El contenedor del proxy depende del contenedor del backend

@@ -1,0 +1,248 @@
+<header
+  class="w-full bg-gray-800 text-white p-4 flex justify-between items-center fixed top-0 left-0 z-20"
+>
+  <!-- Botones de navegación -->
+  <p class="text-2xl font-semibold">FoodCart</p>
+
+  <div class="flex space-x-4 ml-auto">
+    <button
+      class="relative px-4 py-2 after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
+      (click)="navegarA('comidas')"
+    >
+      Menú
+    </button>
+    <a
+      href="mailto:foodcartsalto@gmail.com"
+      class="text-blue-600 bg-gray-800 hover:bg-gray-600 transition duration-300 ease-in-out py-2 px-4 rounded-full"
+    >
+      Contáctenos
+    </a>
+  </div>
+</header>
+<div class="pt-20 max-h-screen overflow-y-auto">
+  <!-- Sección 1: Bienvenida -->
+  <section
+    class="welcome-section relative flex items-center justify-center h-screen bg-cover bg-center -mt-20"
+    style="background-image: url(&quot;assets/logo.jpeg&quot;)"
+  >
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-75"
+    ></div>
+    <div class="relative z-10 text-center text-white p-6">
+      <h1 class="text-4xl md:text-6xl font-bold animate-fadeIn font-montserrat">
+        Bienvenidos a FoodCart
+      </h1>
+      <p class="text-lg md:text-xl mt-4 animate-slideIn font-montserrat">
+        La mejor comida a tu alcance
+      </p>
+    </div>
+  </section>
+
+  <!-- Sección 2: About Us -->
+  <section
+    id="about-us"
+    class="py-12 px-6 bg-gray-900 text-white font-montserrat"
+  >
+    <div class="container mx-auto">
+      <h1 class="text-4xl font-bold mb-12 text-center">Sobre Nosotros</h1>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <!-- Tarjeta de Calidad -->
+        <div
+          class="about-card p-8 bg-white text-gray-900 shadow-md flex flex-col items-center"
+        >
+          <img
+            src="assets/icon1.png"
+            alt="Calidad"
+            class="object-cover w-full"
+          />
+          <h3 class="text-xl font-semibold mb-2">Calidad</h3>
+          <p>
+            Ofrecemos productos de la más alta calidad para garantizar tu
+            satisfacción.
+          </p>
+        </div>
+        <!-- Tarjeta de Rapidez -->
+        <div
+          class="about-card p-8 bg-white text-gray-900 shadow-md flex flex-col items-center"
+        >
+          <img
+            src="assets/icon2.png"
+            alt="Rapidez"
+            class="object-cover w-full"
+          />
+          <h3 class="text-xl font-semibold mb-2">Rapidez</h3>
+          <p>
+            Entregamos tu pedido en el menor tiempo posible, asegurando rapidez
+            y eficiencia.
+          </p>
+        </div>
+        <!-- Tarjeta de Sabor -->
+        <div
+          class="about-card p-8 bg-white text-gray-900 shadow-md flex flex-col items-center"
+        >
+          <img src="assets/icon3.png" alt="Sabor" class="object-cover w-full" />
+          <h3 class="text-xl font-semibold mb-2">Sabor</h3>
+          <p>
+            Nuestros productos son conocidos por su delicioso sabor que deleita
+            a todos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section
+    id="about-details"
+    class="py-16 bg-gray-100 text-gray-800 font-montserrat"
+  >
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Columna de Funcionamiento -->
+        <div class="p-6 bg-white shadow-lg rounded-lg">
+          <h2
+            class="text-3xl font-extrabold text-center lg:text-center text-gray-900"
+          >
+            Funcionamiento
+          </h2>
+          <ul class="list-disc pl-6 space-y-4 text-lg leading-relaxed">
+            <li>
+              <span class="font-semibold">Pedidos optimizados:</span> Nuestra
+              plataforma ofrece la mejor experiencia de pedido desde la web o
+              móvil, ahorrándote tiempo y esfuerzo.
+            </li>
+            <li>
+              <span class="font-semibold">Detalles de pago precargados:</span>
+              Simplificamos el proceso de pago para que puedas realizar tu
+              pedido con solo unos pocos clics.
+            </li>
+            <li>
+              <span class="font-semibold">Gestión de direcciones:</span> Guarda
+              varias direcciones y elige tu favorita al pagar, facilitando tus
+              pedidos recurrentes.
+            </li>
+            <li>
+              <span class="font-semibold">Confirmación en tiempo real:</span>
+              Recibe una confirmación inmediata de tu pedido por parte de
+              nuestro personal, con el tiempo estimado de entrega.
+            </li>
+          </ul>
+        </div>
+
+        <!-- Columna de Sobre Nosotros -->
+        <div class="p-6 bg-white shadow-lg rounded-lg">
+          <h2
+            class="text-3xl font-extrabold text-center lg:text-center text-gray-900"
+          >
+            Nuestra Historia
+          </h2>
+          <p class="text-lg leading-relaxed">
+            FoodCart comenzó como una idea a mediados de 2024. Surge como
+            proyecto final de curso de la materia
+            <span class="italic">"Desarrollo Web y Mobile"</span> y se extendió
+            hasta llegar a los carritos de comida rápida de todo el departamento
+            de Salto. Sus desarrolladores, Gabriela Fares, Emilio Rodríguez y
+            Francisco Lima, son estudiantes de la Universidad Católica del
+            Uruguay en el campus Salto.
+          </p>
+          <p class="mt-4 text-lg leading-relaxed">
+            Este proyecto tiene como misión conectar a los habitantes de Salto
+            con alimentos de calidad y sabor inigualable, optimizando la
+            experiencia tanto para usuarios como para proveedores.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección 3: Mapa -->
+  <section class="py-12 px-6 bg-gray-900 text-white font-montserrat">
+    <div class="container mx-auto px-6">
+      <!-- Contenedor principal dividido en dos columnas -->
+      <div class="flex flex-col lg:flex-row gap-12">
+        <!-- Columna izquierda: Contacto y Mapa -->
+        <div class="flex-1 bg-white p-6 rounded-lg shadow-lg">
+          <!-- Sección de Contacto -->
+          <div class="space-y-4 mb-12">
+            <h2
+              class="text-3xl font-extrabold text-center lg:text-center text-gray-900"
+            >
+              ¿Como Ubicarnos?
+            </h2>
+            <h3
+              class="text-2xl font-semibold mb-4 text-left lg:text-left text-gray-900"
+            >
+              Teléfono:
+            </h3>
+            <ul class="list-disc ml-6 text-lg leading-relaxed text-gray-700">
+              <li class="mb-2">
+                <p class="text-lg text-left lg:text-left text-gray-700">
+                  Tel: (+598) 92 628 071
+                </p>
+              </li>
+            </ul>
+            <h3
+              class="text-2xl font-semibold mb-4 text-left lg:text-left text-gray-900"
+            >
+              Dirección:
+            </h3>
+            <ul class="list-disc ml-6 text-lg leading-relaxed text-gray-700">
+              <li class="mb-2">
+                <p class="text-lg text-left lg:text-left text-gray-700">
+                  Av. Principal 1234, Salto, Uruguay
+                </p>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Sección de Mapa -->
+          <div class="map-container rounded-lg overflow-hidden shadow-lg">
+            <div class="map h-96 w-full">
+              <app-mapa></app-mapa>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna derecha: Información Adicional -->
+        <div class="flex-1 bg-white p-6 rounded-lg shadow-lg">
+          <h2
+            class="text-3xl font-extrabold mb-4 text-center lg:text-center text-gray-900"
+          >
+            Entrega De Comida En Salto, Uruguay
+          </h2>
+          <h3
+            class="text-2xl font-semibold mb-4 text-left lg:text-left text-gray-900"
+          >
+            Tarifa de entrega
+          </h3>
+          <ul class="list-disc ml-6 text-lg leading-relaxed text-gray-700">
+            <li class="mb-2">Zona Naranja: Min UYU 0, Fee UYU 0</li>
+            <li class="mb-2">Zona Roja: Min UYU 0, Fee UYU 20</li>
+            <li class="mb-2">Zona Amarilla: Min UYU 0, Fee UYU 20</li>
+            <li class="mb-2">Zona Verde: Min UYU 0, Fee UYU 20</li>
+            <li class="mb-2">Zona Púrpura: Min UYU 0, Fee UYU 20</li>
+            <li class="mb-2">Zona Celeste: Min UYU 0, Fee UYU 20</li>
+            <li class="mb-2">Zona Amarillo Oscuro: Min UYU 0, Fee UYU 30</li>
+            <li class="mb-2">Zona Azul Oscuro: Min UYU 0, Fee UYU 40</li>
+            <li class="mb-2">Zona Verde Oscuro: Min UYU 400, Fee UYU 40</li>
+            <li class="mb-2">Zona Púrpura Oscuro: Min UYU 500, Fee UYU 50</li>
+            <li class="mb-2">Zona Rosa: Min UYU 600, Fee UYU 60</li>
+          </ul>
+          <h3
+            class="text-2xl font-semibold mt-4 mb-4 text-left lg:text-left text-gray-900"
+          >
+            Horarios de apertura
+          </h3>
+          <ul class="list-disc ml-6 text-lg leading-relaxed text-gray-700">
+            <li class="mb-2">Martes - Jueves: 19:00 - 00:00</li>
+            <li class="mb-2">Viernes - Sábado: 19:00 - 00:30</li>
+            <li class="mb-2">Domingo: 19:00 - 23:50</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <app-footer></app-footer>
+</div>

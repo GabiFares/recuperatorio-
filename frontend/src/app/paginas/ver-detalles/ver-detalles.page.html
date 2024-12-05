@@ -1,0 +1,38 @@
+<!-- Componente de la barra de navegación -->
+<app-navbar></app-navbar>
+
+<!-- Contenedor principal que aloja los detalles del producto -->
+<div class="items-center min-h-screen p-4 max-w-sm mx-auto">
+  <!-- Imagen predeterminada si el producto no tiene foto -->
+  <img
+    *ngIf="producto.foto==false"
+    src="/assets/logo.jpeg"
+    alt="Product Image"
+    class="w-full h-48 object-cover rounded-md"
+  />
+  <!-- Imagen del producto si está disponible -->
+  <img
+    *ngIf="producto.foto==true"
+    src="https://localhost/backend/Resources/img/productos/{{producto.id_producto}}.jpg"
+    alt="Product Image"
+    class="w-full h-48 object-cover rounded-md"
+  />
+
+  <!-- Contenedor para los detalles del producto -->
+  <div class="mt-4 space-y-2">
+    <!-- Nombre del producto -->
+    <h2 class="mt-2 text-lg font-semibold text-gray-800 text-center">
+      {{ producto.nombre }}
+    </h2>
+    <!-- Precio del producto -->
+    <h1 class="mt-2 text-lg font-semibold text-gray-800 text-center">
+      {{ producto.precio_unidad }}$
+    </h1>
+    <!-- Descripción del producto -->
+    <p class="text-center text-black">{{producto.descripcion}}</p>
+    <!-- Botón para agregar el producto al carrito -->
+  </div>
+</div>
+
+<!-- Componente de pie de página -->
+<app-footer></app-footer>

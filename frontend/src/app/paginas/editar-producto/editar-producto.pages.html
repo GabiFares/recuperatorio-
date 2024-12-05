@@ -1,0 +1,160 @@
+<section class="bg-slate-800 min-h-screen flex items-center justify-center">
+  <!-- Contenedor del registro -->
+  <div
+    class="bg-gray-100 flex flex-col md:flex-row rounded-2xl shadow-lg max-w-3xl p-5 max-h-[90vh] overflow-auto"
+  >
+    <!-- Aquí va el formulario -->
+    <div class="w-full px-8">
+      <h2 class="font-bold text-2xl text-slate-800 text-center">Productos</h2>
+      <form id="formPost" class="flex flex-col gap-4" #formPost="ngForm">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="flex flex-col">
+            <!-- Campo para el nombre -->
+            <label class="mt-5">Nombre</label>
+            <input
+              type="text"
+              name="nombre"
+              id="nombre"
+              class="p-2 rounded-xl border w-full"
+              placeholder="Nombre"
+              required
+              [(ngModel)]="nombre"
+              #nombreCntrl="ngModel"
+              [ngClass]="{
+                'border-red-500 bg-red-50': nombreCntrl.invalid && nombreCntrl.touched,
+                'border-gray-300': !nombreCntrl.touched,
+                'border-green-500 bg-green-50': nombreCntrl.valid && nombreCntrl.touched
+              }"
+            />
+            <label
+              *ngIf="nombreCntrl.errors?.['required'] && nombreCntrl.touched"
+              for="nombre"
+              class="text-red-500 text-sm"
+              >Tiene que colocar el nombre del producto.</label
+            >
+          </div>
+          <div class="flex flex-col">
+            <!-- Campo para la descripción -->
+            <label class="mt-5">Descripcion</label>
+            <input
+              type="text"
+              name="descripcion"
+              id="descripcion"
+              class="p-2 rounded-xl border w-full"
+              placeholder="Descripcion"
+              required
+              [(ngModel)]="descripcion"
+              #descripcionCntrl="ngModel"
+              [ngClass]="{
+                'border-red-500 bg-red-50': descripcionCntrl.invalid && descripcionCntrl.touched,
+                'border-gray-300': !descripcionCntrl.touched,
+                'border-green-500 bg-green-50': descripcionCntrl.valid && descripcionCntrl.touched
+              }"
+            />
+            <label
+              *ngIf="descripcionCntrl.errors?.['required'] && descripcionCntrl.touched"
+              for="Descripcion"
+              class="text-red-500 text-sm"
+              >Tiene que colocar la descripción del producto.</label
+            >
+          </div>
+        </div>
+
+        <!-- Campo para el precio por unidad -->
+        <label class="mt-5">Precio Unidad</label>
+        <input
+          type="number"
+          name="precio_unidad"
+          id="precio_unidad"
+          class="p-2 rounded-xl border w-full"
+          placeholder="300"
+          required
+          [(ngModel)]="precio_unidad"
+          #precio_unidadCntrl="ngModel"
+          [ngClass]="{
+            'border-red-500 bg-red-50': precio_unidadCntrl.invalid && precio_unidadCntrl.touched,
+            'border-gray-300': !precio_unidadCntrl.touched,
+            'border-green-500 bg-green-50': precio_unidadCntrl.valid && precio_unidadCntrl.touched
+          }"
+        />
+        <label
+          *ngIf="precio_unidadCntrl.errors?.['required'] && precio_unidadCntrl.touched"
+          for="Precio_Unidad"
+          class="text-red-500 text-sm"
+          >Tiene que colocar el precio por unidad.</label
+        >
+        <label
+          *ngIf="precio_unidadCntrl.errors?.['Precio_Unidad']"
+          for="Precio_Unidad"
+          class="text-red-500 text-sm"
+          >Tiene que colocar un precio válido.</label
+        >
+
+        <!-- Campo para la categoría -->
+        <label class="mt-5">Categoria</label>
+        <select
+          name="id_categoria"
+          id="id_categoria"
+          required
+          [(ngModel)]="categoria"
+          #categoriaCntrl="ngModel"
+          [ngClass]="{
+            'border-red-500 bg-red-50': categoriaCntrl.invalid && categoriaCntrl.touched,
+            'border-gray-300': !categoriaCntrl.touched,
+            'border-green-500 bg-green-50': categoriaCntrl.valid && categoriaCntrl.touched
+          }"
+        >
+          <option value="1">Comida</option>
+          <option value="2">Bebida</option>
+          <option value="3">Acompañamiento</option>
+        </select>
+        <label
+          *ngIf="categoriaCntrl.errors?.['required'] && categoriaCntrl.touched"
+          for="categoria"
+          class="text-red-500 text-sm"
+          >Tiene que seleccionar una categoría.</label
+        >
+
+        <!-- Campo para la foto -->
+        <label class="mt-5">Foto</label>
+        <input
+          type="file"
+          name="foto"
+          id="foto"
+          class="p-2 rounded-xl border w-full"
+          (change)="fileChangeEvent($event)"
+        />
+        <image-cropper
+          [imageChangedEvent]="imageChangedEvent"
+          [maintainAspectRatio]="true"
+          [aspectRatio]="4 / 3"
+          format="png"
+          (imageCropped)="imageCropped($event)"
+          (imageLoaded)="imageLoaded($event)"
+          (loadImageFailed)="loadImageFailed()"
+          *ngIf="mostrarCropper"
+        ></image-cropper>
+        <button
+          id="recortar"
+          name="recortar"
+          (click)="cropImage()"
+          type="button"
+          class="bg-red-800 rounded-xl text-white py-2 hover:scale-110 duration-300"
+          *ngIf="temporaryCroppedImage"
+        >
+          Recortar
+        </button>
+        <button
+          id="crear"
+          name="crear"
+          [disabled]="formPost.invalid"
+          class="bg-slate-800 rounded-xl text-white py-2 hover:scale-110 duration-300"
+          (click)="onSubmit()"
+        >
+          Editar
+        </button>
+        <img [src]="croppedImage" class="mt-4 rounded" />
+      </form>
+    </div>
+  </div>
+</section>
