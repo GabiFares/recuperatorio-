@@ -88,7 +88,7 @@ const regalosRoute: FastifyPluginAsync = async (
           description: "Muestra el objeto resultante del producto creado",
           type: "object",
           properties: {
-            ...regaloPost.properties,
+            ...regaloSchema.properties,
           },
         },
       },
@@ -112,6 +112,17 @@ const regalosRoute: FastifyPluginAsync = async (
             bodyProducto.precio_unidad,
           ]
         );
+
+        console.log("emaaaailllll", bodyProducto.email);
+        let recipient = bodyProducto.email;
+
+        // Envía un correo de confirmación al usuario
+        fastify.mailer.sendMail({
+          from: process.env.user,
+          to: recipient,
+          subject: "Tenes un regalo de FOODCART",
+          html: `<b> El dueño te regaló una compra, podes ir a reglos en nuestra página cuando quieras para cobrarlo, muchas gracias por utilizar FoodCart! 😊 </b>`,
+        });
         reply.code(200).send(result.rows[0]);
       } catch (error) {
         return reply.status(500).send(error);

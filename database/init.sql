@@ -104,7 +104,8 @@ CREATE TABLE IF NOT EXISTS detalle_pedido (
     cantidad INTEGER NOT NULL, 
     indicaciones VARCHAR(200) NULL, 
     id_pedido INTEGER NOT NULL, 
-    id_producto INTEGER NOT NULL, 
+    id_producto INTEGER NULL, 
+    id_regalo INTEGER NULL, 
     CONSTRAINT fk_pedido FOREIGN KEY (id_pedido) 
         REFERENCES pedido (id_pedido) ON DELETE RESTRICT,
     CONSTRAINT fk_producto FOREIGN KEY (id_producto) 
@@ -120,7 +121,7 @@ INSERT INTO direccion (numero, calle) VALUES('1251', 'Artigas');
 
 -- Insertar un usuario administrador
 INSERT INTO usuario (nombre, apellido, email, id_direccion, id_telefono, contraseña) 
-VALUES('ad', 'min', 'admin@example.com', 1, 1, crypt('Contraseña123!', gen_salt('bf')));
+VALUES('ad', 'min', 'gabrielafaresm@gmail.com', 1, 1, crypt('Contraseña123!', gen_salt('bf')));
 UPDATE usuario SET admin = TRUE WHERE id = 1;
 
 INSERT INTO usuario (nombre, apellido, email, id_direccion, id_telefono, contraseña) 

@@ -69,8 +69,9 @@ const detallePedidoRoute: FastifyPluginAsync = async (
           indicaciones: { type: ["string", "null"], nullable: true },
           id_pedido: { type: "integer" },
           id_producto: { type: "integer" },
+          id_regalo: { type: "integer" },
         },
-        required: ["cantidad", "id_pedido", "id_producto"],
+        required: ["cantidad", "id_pedido"],
       },
       response: {
         201: {
@@ -84,12 +85,13 @@ const detallePedidoRoute: FastifyPluginAsync = async (
     },
     onRequest: [fastify.authenticate], // Middleware para autenticar
     handler: async function (request, reply) {
-      const { cantidad, indicaciones, id_pedido, id_producto } =
+      const { cantidad, indicaciones, id_pedido, id_producto, id_regalo } =
         request.body as {
           cantidad: number;
           indicaciones: string;
           id_pedido: number;
           id_producto: number;
+          id_regalo: number;
         };
 
       try {
@@ -109,23 +111,44 @@ const detallePedidoRoute: FastifyPluginAsync = async (
           [id_producto]
         );
 
-        if (productoExists.rows.length === 0) {
+        const regaloExists = await query(
+          "SELECT id_regalo FROM regalo WHERE id_regalo = $1",
+          [id_regalo]
+        );
+
+        if (
+          productoExists.rows.length === 0 &&
+          regaloExists.rows.length === 0
+        ) {
           return reply.status(404).send("El producto especificado no existe");
         }
 
         // Inserta el nuevo detalle de pedido en la base de datos
-        const response = await query(
-          `INSERT INTO detalle_pedido(
-                        cantidad,
-                        indicaciones,
-                        id_pedido,
-                        id_producto
-                    ) VALUES($1, $2, $3, $4) RETURNING *`,
-          [cantidad, indicaciones, id_pedido, id_producto]
-        );
+        if (!id_regalo) {
+          const response = await query(
+            `INSERT INTO detalle_pedido(
+                          cantidad,
+                          indicaciones,
+                          id_pedido,
+                          id_producto
+                      ) VALUES($1, $2, $3, $4) RETURNING *`,
+            [cantidad, indicaciones, id_pedido, id_producto]
+          );
+          return response.rows[0];
+        } else {
+          const response = await query(
+            `INSERT INTO detalle_pedido(
+                          cantidad,
+                          indicaciones,
+                          id_pedido,
+                          id_regalo
+                      ) VALUES($1, $2, $3, $4) RETURNING *`,
+            [cantidad, indicaciones, id_pedido, id_regalo]
+          );
+          return response.rows[0];
+        }
 
         reply.code(201);
-        return response.rows[0];
       } catch (error) {
         console.error("Error al crear detalle de pedido:", error);
         return reply.status(500).send(error);
@@ -197,10 +220,9 @@ const detallePedidoRoute: FastifyPluginAsync = async (
     },
   });
 
-
   // ################################################### DELETE ###################################################
   // Ruta para eliminar un detalle de pedido por ID de pedido e ID de producto
-  
+
   fastify.delete("/:id_pedido/:id_producto", {
     schema: {
       summary: "Eliminar un detalle de pedido por Id pedido y Id producto",

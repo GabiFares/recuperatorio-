@@ -42,6 +42,7 @@ export class AddToCartComponent {
   @Input() isOpen: boolean = false;
   @Input() showNote: boolean = true;
   @Input() actualizar: boolean = false;
+  @Input() esRegalo: boolean = true;
   @Output() closeModal = new EventEmitter<void>();
 
   userId: string = this.authService.getUserId();

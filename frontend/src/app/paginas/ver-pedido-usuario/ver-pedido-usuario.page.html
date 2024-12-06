@@ -24,7 +24,8 @@
               Ver detalle del pedido
             </button>
             <button
-              (click)="verDetalles(pedido.id_pedido,pedido.id_direccion)"
+              (click)="regalar(pedido)"
+              (click)="cambiarEstado(pedido)"
               *ngIf="this.isAdmin==true && pedido.estado == 'ENTREGADO' && this.repartidor==false"
               class="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-800 transition-all flex items-center justify-center"
             >

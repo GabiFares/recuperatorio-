@@ -19,6 +19,7 @@ import { ContactoPage } from './paginas/contacto/contacto.page'; // Importa la p
 import { acompañamientosPage } from './paginas/acompanamientos/acompanamientos.page';
 import { UsuariosPage } from './paginas/usuarios/usuarios.page';
 import { VerPedidoUsuarioPage } from './paginas/ver-pedido-usuario/ver-pedido-usuario.page';
+import { RegalosPage } from './paginas/regalos/regalos.page';
 
 export const routes: Routes = [
   {
@@ -126,5 +127,11 @@ export const routes: Routes = [
     component: VerPedidoUsuarioPage,
     title: 'PedidosUsuarios',
     canActivate: [checkAdminGuard],
+  },
+  {
+    path: 'regalos',
+    component: RegalosPage,
+    title: 'Regalos',
+    canActivate: [checkTokenGuard],
   },
 ];

@@ -22,16 +22,11 @@ export const regaloSchema = Type.Object({
     pattern: "^[^\\d]+$", // Valida que no contenga dígitos
     examples: ["Regalo"],
   }),
-  descripcion: Type.String({
-    minLength: 3,
-    maxLength: 300,
-    examples: [
-      `Tres patties de 100% carne de res con cebolla picada, ketchup, mostaza y dos fetas de queso americano.`,
-    ],
-  }),
+  descripcion: Type.String({}),
   precio_unidad: Type.Number({
     examples: [300],
   }),
+  email: Type.String({}),
 });
 export type productoSchemaType = Static<typeof regaloSchema>;
 
@@ -41,5 +36,6 @@ export const regaloPost = Type.Pick(regaloSchema, [
   "nombre",
   "descripcion",
   "precio_unidad",
+  "email",
 ]);
 export type regaloPostType = Static<typeof regaloPost>;

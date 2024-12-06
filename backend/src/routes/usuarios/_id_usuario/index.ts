@@ -297,14 +297,6 @@ const usuarioIdRoute: FastifyPluginAsync = async (
     onRequest: [fastify.authenticate], // Middleware para autenticar
     handler: async function (request, reply) {
       const { id_usuario } = request.params as IdUsuario;
-      const idt = request.user.id;
-
-      // Verifica si el usuario tiene permisos para acceder
-      if (id_usuario != parseInt(idt)) {
-        return reply
-          .status(401)
-          .send({ error: "No tiene permisos para hacer esto." });
-      }
 
       const response = await query(
         `SELECT 
@@ -323,7 +315,7 @@ const usuarioIdRoute: FastifyPluginAsync = async (
         LEFT JOIN direccion d ON u.id_direccion = d.id
         LEFT JOIN telefono t ON u.id_telefono = t.id  
         WHERE u.id=$1`,
-        [idt]
+        [id_usuario]
       );
 
       reply.status(200);

@@ -9,6 +9,8 @@ import { PutPedidoService } from '../../servicios/pedidos/put-pedido.service';
 import { WebSocketSubject, WebSocketSubjectConfig } from 'rxjs/webSocket';
 import { VerPedido } from '../../interfaces/pedido';
 import { JsonpInterceptor } from '@angular/common/http';
+import { PostRegaloService } from '../../servicios/regalo';
+import { CRUDUsuariosService } from '../../servicios/crud-usuarios.service';
 
 @Component({
   selector: 'app-ver-pedido-usuario',
@@ -30,6 +32,8 @@ export class VerPedidoUsuarioPage implements OnInit {
   );
   putPedido: PutPedidoService = inject(PutPedidoService);
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
+  private crudUsuarios: CRUDUsuariosService = inject(CRUDUsuariosService);
+  private postRegaloService: PostRegaloService = inject(PostRegaloService);
   router: Router = inject(Router);
   private wsSubject: WebSocketSubject<string>;
 
@@ -88,6 +92,34 @@ export class VerPedidoUsuarioPage implements OnInit {
     );
     this.pedidosFiltrados.set(this.pedidos());
     console.log('pedidos', pedidossinfiltrar);
+  }
+
+  async regalar(pedido: any) {
+    console.log('el pedido que llega al método', pedido);
+    let descripciones = '';
+    let sacarDescripcion = pedido.items.forEach((producto: any) => {
+      descripciones += ` nombre: ${producto.producto}, cantidad: ${producto.cantidad}`;
+    });
+
+    console.log('las descripciones dentro de regalar', descripciones);
+
+    const usuarioGet = await this.crudUsuarios.getUserById(pedido.id_usuario);
+
+    let regalo = {
+      id_usuario: pedido.id_usuario,
+      nombre: 'Regalo',
+      descripcion: descripciones,
+      precio_unidad: 0,
+      email: usuarioGet.email,
+    };
+    console.log('OBJETO A POSTEAR', JSON.stringify(regalo));
+    this.postRegaloService.postRegalo(JSON.stringify(regalo));
+  }
+
+  async cambiarEstado(pedido: any) {
+    const estado = 'EN_CAMINO';
+    pedido.estado = estado;
+    this.putPedido.put(JSON.stringify(pedido), pedido.id_pedido);
   }
 
   async cargarPedidosRepartidor() {
